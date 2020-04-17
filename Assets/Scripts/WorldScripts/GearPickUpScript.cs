@@ -4,17 +4,30 @@ using UnityEngine;
 
 public class GearPickUpScript : MonoBehaviour
 {
-
     public bool inCollider;
     public GameObject player;
     public GameObject originalParent;
+    public GameObject activationText;
     private Vector3 positionOffset;
+    private Vector3 startPos;
+
+    private bool activated;
+
+    private void Start()
+    {
+        activationText.SetActive(false);
+        startPos = this.transform.localPosition;
+    }
 
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject == player)
         {
-            if (Input.GetKeyUp(KeyCode.P))
+            if (!activated)
+            {
+                activationText.SetActive(true);
+            }
+            if (Input.GetKeyUp(KeyCode.P) && this.GetComponent<MeshRenderer>().enabled)
             {
                 this.transform.parent = player.transform;
                 positionOffset = new Vector3(0f, 1f, -0.1f);
@@ -24,6 +37,8 @@ public class GearPickUpScript : MonoBehaviour
                     this.GetComponent<BoxCollider>().enabled = false;
                 }
                 this.GetComponent<Rigidbody>().isKinematic = true;
+                activationText.SetActive(false);
+                activated = true;
             }
         }
     }

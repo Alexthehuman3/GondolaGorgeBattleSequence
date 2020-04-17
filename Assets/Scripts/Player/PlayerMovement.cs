@@ -8,8 +8,8 @@ public class PlayerMovement : MonoBehaviour
     public float speedDampTime = 0.01f;
     public float sensitivityX = 1.0f;
     public bool playerMovable = true;
-    private Animator anim;
-    private HashIDs hash;
+    public Animator anim;
+    public HashIDs hash;
 
     private void Awake()
     {
